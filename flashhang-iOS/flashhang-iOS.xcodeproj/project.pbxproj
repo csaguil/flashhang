@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40489113210D1A5A00A36D7F /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40489112210D1A5A00A36D7F /* SignUpViewController.swift */; };
+		40489115210D1BE800A36D7F /* AddInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40489114210D1BE800A36D7F /* AddInterestsViewController.swift */; };
 		40D42A93210D02BD00531C77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42A92210D02BD00531C77 /* AppDelegate.swift */; };
 		40D42A95210D02BD00531C77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42A94210D02BD00531C77 /* ViewController.swift */; };
 		40D42A98210D02BD00531C77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40D42A96210D02BD00531C77 /* Main.storyboard */; };
 		40D42A9A210D02BE00531C77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40D42A99210D02BE00531C77 /* Assets.xcassets */; };
 		40D42A9D210D02BE00531C77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40D42A9B210D02BE00531C77 /* LaunchScreen.storyboard */; };
 		40D42AA8210D02BE00531C77 /* flashhang_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AA7210D02BE00531C77 /* flashhang_iOSTests.swift */; };
+		40D42AB3210D13FE00531C77 /* FlashHangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */; };
+		40D42AB5210D147100531C77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AB4210D147100531C77 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40489112210D1A5A00A36D7F /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		40489114210D1BE800A36D7F /* AddInterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterestsViewController.swift; sourceTree = "<group>"; };
 		40D42A8F210D02BD00531C77 /* flashhang-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "flashhang-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40D42A92210D02BD00531C77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40D42A94210D02BD00531C77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +42,8 @@
 		40D42AA3210D02BE00531C77 /* flashhang-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flashhang-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40D42AA7210D02BE00531C77 /* flashhang_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flashhang_iOSTests.swift; sourceTree = "<group>"; };
 		40D42AA9210D02BE00531C77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashHangViewController.swift; sourceTree = "<group>"; };
+		40D42AB4210D147100531C77 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,11 +86,15 @@
 			isa = PBXGroup;
 			children = (
 				40D42A92210D02BD00531C77 /* AppDelegate.swift */,
-				40D42A94210D02BD00531C77 /* ViewController.swift */,
 				40D42A96210D02BD00531C77 /* Main.storyboard */,
+				40D42A94210D02BD00531C77 /* ViewController.swift */,
+				40D42AB4210D147100531C77 /* LoginViewController.swift */,
 				40D42A99210D02BE00531C77 /* Assets.xcassets */,
 				40D42A9B210D02BE00531C77 /* LaunchScreen.storyboard */,
 				40D42A9E210D02BE00531C77 /* Info.plist */,
+				40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */,
+				40489112210D1A5A00A36D7F /* SignUpViewController.swift */,
+				40489114210D1BE800A36D7F /* AddInterestsViewController.swift */,
 			);
 			path = "flashhang-iOS";
 			sourceTree = "<group>";
@@ -197,8 +209,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40D42AB5210D147100531C77 /* LoginViewController.swift in Sources */,
 				40D42A95210D02BD00531C77 /* ViewController.swift in Sources */,
 				40D42A93210D02BD00531C77 /* AppDelegate.swift in Sources */,
+				40D42AB3210D13FE00531C77 /* FlashHangViewController.swift in Sources */,
+				40489115210D1BE800A36D7F /* AddInterestsViewController.swift in Sources */,
+				40489113210D1A5A00A36D7F /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
