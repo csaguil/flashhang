@@ -49,7 +49,7 @@ def retrieve_user_info():
         return json.dumps(dict(result))
 
 
-@app.route('/startlobby', methods=['POST'])
+@app.route('/lobby/start', methods=['POST'])
 def create_new_lobby():
     host_uid = request.form.get("uid")
     lobby_name = request.form.get("lobby_name")
@@ -62,6 +62,12 @@ def create_new_lobby():
     result = conn.execute(insert_new_lobby_query, id=new_lobby_id, name=lobby_name, host_id=host_uid)
     return json.dumps({"lobby_id": new_lobby_id})
 
+
+@app.route('/lobby/join/<lobby_id>', methods=['POST'])
+def join_lobby(lobby_id):
+    uid = request.form.get("uid")
+    insert_user_into_lobby_query = """
+    """
 
 
 
