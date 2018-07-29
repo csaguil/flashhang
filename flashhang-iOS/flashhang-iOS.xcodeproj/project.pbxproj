@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		141D0A8FD841ADA50252269B /* Pods_flashhang_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E54B3F633CC3DA14B03A0875 /* Pods_flashhang_iOSTests.framework */; };
 		40489113210D1A5A00A36D7F /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40489112210D1A5A00A36D7F /* SignUpViewController.swift */; };
 		40489115210D1BE800A36D7F /* AddInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40489114210D1BE800A36D7F /* AddInterestsViewController.swift */; };
+		40489117210D30E000A36D7F /* auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40489116210D30E000A36D7F /* auth0.plist */; };
+		40489119210D3B0300A36D7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40489118210D3B0300A36D7F /* GoogleService-Info.plist */; };
+		4048911B210D3CEC00A36D7F /* StartHangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4048911A210D3CEC00A36D7F /* StartHangViewController.swift */; };
+		4048911D210D3F6000A36D7F /* ShareLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4048911C210D3F6000A36D7F /* ShareLinkViewController.swift */; };
 		40D42A93210D02BD00531C77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42A92210D02BD00531C77 /* AppDelegate.swift */; };
 		40D42A95210D02BD00531C77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42A94210D02BD00531C77 /* ViewController.swift */; };
 		40D42A98210D02BD00531C77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40D42A96210D02BD00531C77 /* Main.storyboard */; };
@@ -17,6 +22,7 @@
 		40D42AA8210D02BE00531C77 /* flashhang_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AA7210D02BE00531C77 /* flashhang_iOSTests.swift */; };
 		40D42AB3210D13FE00531C77 /* FlashHangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */; };
 		40D42AB5210D147100531C77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AB4210D147100531C77 /* LoginViewController.swift */; };
+		A7E0A6F939BF016F1CFBC13C /* Pods_flashhang_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8625C53640F48116789038FD /* Pods_flashhang_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,8 +36,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C6786BE3E907561F6F93BC1 /* Pods-flashhang-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flashhang-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-flashhang-iOSTests/Pods-flashhang-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		2F81DC13E4FC6294443E3DB5 /* Pods-flashhang-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flashhang-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-flashhang-iOSTests/Pods-flashhang-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		40489112210D1A5A00A36D7F /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		40489114210D1BE800A36D7F /* AddInterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterestsViewController.swift; sourceTree = "<group>"; };
+		40489116210D30E000A36D7F /* auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = auth0.plist; sourceTree = "<group>"; };
+		40489118210D3B0300A36D7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4048911A210D3CEC00A36D7F /* StartHangViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartHangViewController.swift; sourceTree = "<group>"; };
+		4048911C210D3F6000A36D7F /* ShareLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkViewController.swift; sourceTree = "<group>"; };
 		40D42A8F210D02BD00531C77 /* flashhang-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "flashhang-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40D42A92210D02BD00531C77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40D42A94210D02BD00531C77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +56,10 @@
 		40D42AA9210D02BE00531C77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashHangViewController.swift; sourceTree = "<group>"; };
 		40D42AB4210D147100531C77 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5B128EF19E36ACED2C3E7B6C /* Pods-flashhang-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flashhang-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-flashhang-iOS/Pods-flashhang-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		8625C53640F48116789038FD /* Pods_flashhang_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_flashhang_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB819D61E1991AC36E83026E /* Pods-flashhang-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flashhang-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-flashhang-iOS/Pods-flashhang-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E54B3F633CC3DA14B03A0875 /* Pods_flashhang_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_flashhang_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7E0A6F939BF016F1CFBC13C /* Pods_flashhang_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				141D0A8FD841ADA50252269B /* Pods_flashhang_iOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +88,8 @@
 				40D42A91210D02BD00531C77 /* flashhang-iOS */,
 				40D42AA6210D02BE00531C77 /* flashhang-iOSTests */,
 				40D42A90210D02BD00531C77 /* Products */,
+				4654B8F745D866B9D1DEC2C1 /* Pods */,
+				CEE0C18B48D68364BDA5ED1A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,14 +107,18 @@
 			children = (
 				40D42A92210D02BD00531C77 /* AppDelegate.swift */,
 				40D42A96210D02BD00531C77 /* Main.storyboard */,
+				4048911A210D3CEC00A36D7F /* StartHangViewController.swift */,
+				4048911C210D3F6000A36D7F /* ShareLinkViewController.swift */,
 				40D42A94210D02BD00531C77 /* ViewController.swift */,
 				40D42AB4210D147100531C77 /* LoginViewController.swift */,
 				40D42A99210D02BE00531C77 /* Assets.xcassets */,
 				40D42A9B210D02BE00531C77 /* LaunchScreen.storyboard */,
 				40D42A9E210D02BE00531C77 /* Info.plist */,
+				40489118210D3B0300A36D7F /* GoogleService-Info.plist */,
 				40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */,
 				40489112210D1A5A00A36D7F /* SignUpViewController.swift */,
 				40489114210D1BE800A36D7F /* AddInterestsViewController.swift */,
+				40489116210D30E000A36D7F /* auth0.plist */,
 			);
 			path = "flashhang-iOS";
 			sourceTree = "<group>";
@@ -108,6 +132,26 @@
 			path = "flashhang-iOSTests";
 			sourceTree = "<group>";
 		};
+		4654B8F745D866B9D1DEC2C1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BB819D61E1991AC36E83026E /* Pods-flashhang-iOS.debug.xcconfig */,
+				5B128EF19E36ACED2C3E7B6C /* Pods-flashhang-iOS.release.xcconfig */,
+				2F81DC13E4FC6294443E3DB5 /* Pods-flashhang-iOSTests.debug.xcconfig */,
+				1C6786BE3E907561F6F93BC1 /* Pods-flashhang-iOSTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CEE0C18B48D68364BDA5ED1A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8625C53640F48116789038FD /* Pods_flashhang_iOS.framework */,
+				E54B3F633CC3DA14B03A0875 /* Pods_flashhang_iOSTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,9 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 40D42AAC210D02BE00531C77 /* Build configuration list for PBXNativeTarget "flashhang-iOS" */;
 			buildPhases = (
+				E6A78A18A9D77D27F6C03194 /* [CP] Check Pods Manifest.lock */,
 				40D42A8B210D02BD00531C77 /* Sources */,
 				40D42A8C210D02BD00531C77 /* Frameworks */,
 				40D42A8D210D02BD00531C77 /* Resources */,
+				FF38A092CF442A0F2DD46715 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +178,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 40D42AAF210D02BE00531C77 /* Build configuration list for PBXNativeTarget "flashhang-iOSTests" */;
 			buildPhases = (
+				BA3D5C6B7C1875031416CC65 /* [CP] Check Pods Manifest.lock */,
 				40D42A9F210D02BE00531C77 /* Sources */,
 				40D42AA0210D02BE00531C77 /* Frameworks */,
 				40D42AA1210D02BE00531C77 /* Resources */,
@@ -191,7 +238,9 @@
 			files = (
 				40D42A9D210D02BE00531C77 /* LaunchScreen.storyboard in Resources */,
 				40D42A9A210D02BE00531C77 /* Assets.xcassets in Resources */,
+				40489119210D3B0300A36D7F /* GoogleService-Info.plist in Resources */,
 				40D42A98210D02BD00531C77 /* Main.storyboard in Resources */,
+				40489117210D30E000A36D7F /* auth0.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,12 +253,75 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BA3D5C6B7C1875031416CC65 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-flashhang-iOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6A78A18A9D77D27F6C03194 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-flashhang-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF38A092CF442A0F2DD46715 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-flashhang-iOS/Pods-flashhang-iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Auth0/Auth0.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/SimpleKeychain/SimpleKeychain.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Auth0.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleKeychain.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-flashhang-iOS/Pods-flashhang-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		40D42A8B210D02BD00531C77 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4048911D210D3F6000A36D7F /* ShareLinkViewController.swift in Sources */,
 				40D42AB5210D147100531C77 /* LoginViewController.swift in Sources */,
+				4048911B210D3CEC00A36D7F /* StartHangViewController.swift in Sources */,
 				40D42A95210D02BD00531C77 /* ViewController.swift in Sources */,
 				40D42A93210D02BD00531C77 /* AppDelegate.swift in Sources */,
 				40D42AB3210D13FE00531C77 /* FlashHangViewController.swift in Sources */,
@@ -372,6 +484,7 @@
 		};
 		40D42AAD210D02BE00531C77 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB819D61E1991AC36E83026E /* Pods-flashhang-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -390,6 +503,7 @@
 		};
 		40D42AAE210D02BE00531C77 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B128EF19E36ACED2C3E7B6C /* Pods-flashhang-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -408,6 +522,7 @@
 		};
 		40D42AB0210D02BE00531C77 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F81DC13E4FC6294443E3DB5 /* Pods-flashhang-iOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -429,6 +544,7 @@
 		};
 		40D42AB1210D02BE00531C77 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C6786BE3E907561F6F93BC1 /* Pods-flashhang-iOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

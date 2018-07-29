@@ -1,0 +1,24 @@
+{
+  "Mac" : [
+    {
+      "name" : "Auth0",
+      "hash" : "605c22104c5dc6fdc91c08a7141996579d457ee825e067e3359e5707095407aa"
+    }
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+    {
+      "name" : "Auth0",
+      "hash" : "5ece1858b67c32099d3437699c454e36910df6dcd9a2885399c7d73b58ebdccf"
+    }
+  ],
+  "commitish" : "1.12.0",
+  "iOS" : [
+    {
+      "name" : "Auth0",
+      "hash" : "536fa17eb3d7b92bd4c21daebe65c8e70d18c0f1e90d79ced86be916e18678b3"
+    }
+  ]
+}

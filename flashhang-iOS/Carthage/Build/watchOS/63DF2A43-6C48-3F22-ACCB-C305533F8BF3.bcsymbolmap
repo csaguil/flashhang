@@ -1,0 +1,52 @@
+BCSymbolMap Version: 2.0
+-[A0SimpleKeychain init]
+-[A0SimpleKeychain initWithService:]
+-[A0SimpleKeychain initWithService:accessGroup:]
+-[A0SimpleKeychain stringForKey:]
+-[A0SimpleKeychain dataForKey:]
+-[A0SimpleKeychain stringForKey:promptMessage:]
+-[A0SimpleKeychain dataForKey:promptMessage:]
+-[A0SimpleKeychain dataForKey:promptMessage:error:]
+-[A0SimpleKeychain hasValueForKey:]
+-[A0SimpleKeychain setString:forKey:]
+-[A0SimpleKeychain setData:forKey:]
+-[A0SimpleKeychain setString:forKey:promptMessage:]
+-[A0SimpleKeychain setData:forKey:promptMessage:]
+-[A0SimpleKeychain deleteEntryForKey:]
+-[A0SimpleKeychain clearAll]
++[A0SimpleKeychain keychain]
++[A0SimpleKeychain keychainWithService:]
++[A0SimpleKeychain keychainWithService:accessGroup:]
+-[A0SimpleKeychain accessibility]
+-[A0SimpleKeychain stringForSecStatus:]
+-[A0SimpleKeychain baseQuery]
+-[A0SimpleKeychain queryFindAll]
+-[A0SimpleKeychain queryFindByKey:message:]
+-[A0SimpleKeychain queryUpdateValue:message:]
+-[A0SimpleKeychain queryNewKey:value:]
+-[A0SimpleKeychain queryFetchOneByKey:message:]
+-[A0SimpleKeychain service]
+-[A0SimpleKeychain accessGroup]
+-[A0SimpleKeychain defaultAccessiblity]
+-[A0SimpleKeychain setDefaultAccessiblity:]
+-[A0SimpleKeychain useAccessControl]
+-[A0SimpleKeychain setUseAccessControl:]
+-[A0SimpleKeychain .cxx_destruct]
+_OBJC_IVAR_$_A0SimpleKeychain._service
+_OBJC_IVAR_$_A0SimpleKeychain._accessGroup
+_OBJC_IVAR_$_A0SimpleKeychain._defaultAccessiblity
+_OBJC_IVAR_$_A0SimpleKeychain._useAccessControl
+Apple LLVM version 9.1.0 (clang-902.0.39.2)
+/Users/Cristian/Projects/flashhang/flashhang-iOS/Carthage/Checkouts/SimpleKeychain/SimpleKeychain/A0SimpleKeychain.m
+/Users/Cristian/Projects/flashhang/flashhang-iOS/Carthage/Checkouts/SimpleKeychain
+/Users/Cristian/Projects/flashhang/flashhang-iOS/Carthage/Checkouts/SimpleKeychain/SimpleKeychain/A0SimpleKeychain.h
+CFBridgingRelease
+/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Developer/SDKs/WatchOS4.3.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSObject.h
+-[A0SimpleKeychain(KeyPair) generateRSAKeyPairWithLength:publicKeyTag:privateKeyTag:]
+-[A0SimpleKeychain(KeyPair) dataForRSAKeyWithTag:]
+-[A0SimpleKeychain(KeyPair) hasRSAKeyWithTag:]
+-[A0SimpleKeychain(KeyPair) deleteRSAKeyWithTag:]
+-[A0SimpleKeychain(KeyPair) keyRefOfRSAKeyWithTag:]
+-[A0SimpleKeychain(Deprecated) publicRSAKeyDataForTag:]
+/Users/Cristian/Projects/flashhang/flashhang-iOS/Carthage/Checkouts/SimpleKeychain/SimpleKeychain/A0SimpleKeychain+KeyPair.m
+/Users/Cristian/Library/Caches/org.carthage.CarthageKit/DerivedData/9.4.1_9F2000/SimpleKeychain/0.8.1/Build/Intermediates.noindex/ArchiveIntermediates/SimpleKeychain-watchOS/IntermediateBuildFilesPath/SimpleKeychain.build/Release-watchos/SimpleKeychain-watchOS.build/DerivedSources/SimpleKeychain_vers.c

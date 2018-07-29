@@ -1,0 +1,27 @@
+{
+  "Mac" : [
+    {
+      "name" : "SimpleKeychain",
+      "hash" : "0dbefba92485d1b7addb90392ddc7e9ff2712828a091cf52e9be00587b084a2e"
+    }
+  ],
+  "watchOS" : [
+    {
+      "name" : "SimpleKeychain",
+      "hash" : "2ddea796026dfc03c20b352cc8d03ff66ed52e232e8cdf4213aed7b12c7597e2"
+    }
+  ],
+  "tvOS" : [
+    {
+      "name" : "SimpleKeychain",
+      "hash" : "e413cd60a6a9c54688ff86bad9f2836a64c29ee8b409c90d007ea2f9d0b0a853"
+    }
+  ],
+  "commitish" : "0.8.1",
+  "iOS" : [
+    {
+      "name" : "SimpleKeychain",
+      "hash" : "6b0532502ad2e9a0e8a0d1ebaeb394454f2228a9cf1c3e756537f2b7c76dd40e"
+    }
+  ]
+}

@@ -48,5 +48,8 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
         }
     }
     
+    @IBAction func next(_ sender: Any) {
+        performSegue(withIdentifier: "addInterestsToStartHangSegue", sender: nil)
+    }
 }
 

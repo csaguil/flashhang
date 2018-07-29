@@ -1,0 +1,6 @@
+framework module Pods_flashhang_iOS {
+  umbrella header "Pods-flashhang-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
