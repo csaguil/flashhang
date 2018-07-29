@@ -100,6 +100,7 @@ def join_lobby(lobby_id):
         this_lobby_ref.update({
             "current_members": {
                 uid: {
+                    "name": this_user["name"],
                     "preferences": this_user["preferences"],
                     "location": user_current_location
                 }
@@ -107,6 +108,7 @@ def join_lobby(lobby_id):
         })
     else:
         this_lobby_current_members[uid] = {
+            "name": this_user["name"],
             "preferences": this_user["preferences"],
             "location": user_current_location
         }
