@@ -53,15 +53,15 @@ def create_new_lobby():
     lobby_details = request.get_json()
     host_uid = lobby_details["uid"]
     lobby_name = lobby_details["lobby_name"]
-    new_lobby_id = random.getrandbits(64)
-    lobby_ref.set({
+    new_lobby_id = random.getrandbits(16)
+    lobby_ref.update({
         new_lobby_id: {
             'name': lobby_name,
             'state': "Pre_Comp",
             'host_uid': host_uid
         }
     })
-    return json.dumps({"lobby_id": new_lobby_id})
+    return json.dumps({"lobby_id": str(new_lobby_id)})
 
 
 @app.route('/lobby/join/<lobby_id>', methods=['POST'])
@@ -82,7 +82,7 @@ def join_lobby(lobby_id):
     this_lobby = this_lobby_ref.get()
     this_lobby_current_members = this_lobby["current_members"] if "current_members" in this_lobby else None
     if this_lobby_current_members is None:
-        this_lobby_ref.set({
+        this_lobby_ref.update({
             "current_members": {
                 uid: {
                     "preferences": this_user["preferences"],
