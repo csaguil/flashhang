@@ -13,6 +13,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
+import numpy as np
 
 #UNIX TIMESTAMP
 from datetime import datetime, timedelta
@@ -21,6 +22,10 @@ import calendar
 
 from math import radians, sin, cos, atan2, sqrt, ceil
 from random import randint
+
+from uber_rides.session import Session
+from uber_rides.client import UberRidesClient
+
 
 # Create application, and point static path (where static resources like images, css, and js files are stored) to the
 # "static folder"
@@ -132,6 +137,63 @@ def lobby_view(lobby_id):
 list_of_cats = ["escapegames","amusementparks", "gokarts", "museums", "cafes","bars", "karaoke", "zoos","makerspaces", "festivals","paintball", "mini_golf", "bowling","spas"]
 preference_watch  = []
 options = []
+################ Uber ##################################
+def uber_std(coordList, anchorCoord):
+   session = Session(server_token='-11zxL_te4zNw9_wH3mITTYeMIgReAEC0m2Wvr2g')
+   client = UberRidesClient(session)
+ 
+   price_list = []
+   for people in coordList:
+       start_lat = people[0]
+       start_lon = people[1]
+       end_lat = anchorCoord[0]
+       end_lon = anchorCoord[1]
+       response = client.get_price_estimates(start_latitude = start_lat, start_longitude = start_lon, end_latitude = end_lat, end_longitude = end_lon, seat_count=1)
+       estimate = response.json.get('prices')[6]['low_estimate']
+       price_list.append(estimate)
+     
+   anchorCoord_uber_std = np.std(price_list)
+   return anchorCoord_uber_std
+
+
+def getIdealLocationr(coordList):
+
+   numPeople = len(coordList)
+   lat_sum = 0
+   lon_sum = 0
+
+   for peopleCoords in coordList:
+       lat_sum += peopleCoords[0]
+       lon_sum += peopleCoords[1]
+
+   avgCoord = (lat_sum/numPeople, lon_sum/numPeople)
+
+   totalDistance = 0
+   anchorCoord = coordList[0]
+   anchorCoord_std = uber_std(coordList, anchorCoord)
+   minDist = lat_lon_miles(avgCoord, anchorCoord)
+   for peopleCoords in coordList:
+       dist_from_avg = lat_lon_miles(avgCoord, peopleCoords)
+       totalDistance += dist_from_avg
+       peopleCoords_std = uber_std(coordList, peopleCoords)
+       if(dist_from_avg<minDist and  peopleCoords_std<anchorCoord_std):
+           anchorCoord = peopleCoords
+           anchorCoord_std = peopleCoords_std
+           minDist = dist_from_avg
+   
+   idealLocation = anchorCoord
+   avgDist = totalDistance/numPeople
+
+   return (idealLocation,avgDist)
+
+
+
+
+
+
+
+
+
 
 #############Event Brite###########################
 
@@ -468,7 +530,7 @@ def begin_compromise(lobby,lobby_id):
 
     #get ideal location
     print(list_of_user_coords)
-    location_return = getIdealLocation(list_of_user_coords)
+    location_return = getIdealLocationr(list_of_user_coords)
     ideal_location = location_return[0]
     radius = location_return[1]
     #Remove this
