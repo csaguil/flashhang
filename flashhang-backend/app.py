@@ -77,25 +77,21 @@ def create_new_lobby():
 def join_lobby(lobby_id):
     uid = request.args.get("uid")
     user_current_location = request.args.get("location")
-    uid = 'APFmUr3h0XexEANFNsKA6VsqJr72'
-    print(uid)
-    print(user_current_location)
+
     this_user_ref = users_ref.child(uid)
     this_user = this_user_ref.get()
-    # this_user_active_lobbies = this_user["active_lobbies"] + ", " + str(lobby_id) if "active_lobbies" in \
-    #                                                                                  this_user else str(lobby_id)
-    this_user_active_lobbies = this_user["active_lobbies"] + str(lobby_id) if "active_lobbies" in \
+                                                                  
+    this_user_active_lobbies = this_user["active_lobbies"] + [str(lobby_id)] if "active_lobbies" in \
                                                                               this_user else [str(lobby_id)]
     this_user_ref.update({
         "location": user_current_location,
         "active_lobbies": this_user_active_lobbies
     })
-    print('here')
+
     this_lobby_ref = lobby_ref.child(lobby_id)
     this_lobby = this_lobby_ref.get()
-    print(this_lobby)
     this_lobby_current_members = this_lobby["current_members"] if "current_members" in this_lobby else None
-    print(this_lobby)
+
     if this_lobby_current_members is None:
         this_lobby_ref.update({
             "current_members": {
@@ -113,7 +109,7 @@ def join_lobby(lobby_id):
         this_lobby_ref.update({
             "current_members": this_lobby_current_members
         })
-    return {"status":"success"}
+    return json.dumps({"status":"success"})
 
 
 @app.route('/lobby/<lobby_id>')
@@ -218,13 +214,6 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
             option["url"] = event["url"]
             print(event["datetime_tbd"])
             if event["datetime_tbd"] == False:
-                #print(event["datetime_tbd"])
-                # print('Hi')
-                # print(time.mktime(event["datetime_local"]).timetuple )
-                # print(time.strftime('%d',time.mktime(event["datetime_local"]).timetuple ))
-                # print(time.strftime('%d of %B at %H%M', time.gmtime(event["datetime_local"])))
-                # print( datetime(event["datetime_local"]).strptime("%d" + " of " + "%B" +  " at " + "%H%M"))
-                # presentableTime = datetime(event["datetime_local"])
                 option["time"] = event["datetime_local"]
                 pass
             if 'name' in event["venue"]:
@@ -343,7 +332,7 @@ def begin_compromise(lobby):
 def update_lobby_on_firebase(choices):
     this_lobby_ref = lobby_ref.child(lobby_id)
     
-    this_lobby_ref.set({
+    this_lobby_ref.update({
             "choices": {
                 "0": choices[0],
                 "1": choices[1],
