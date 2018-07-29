@@ -5,6 +5,7 @@ File that is the central location of code for our app.
 """
 
 from flask import Flask, request
+import requests
 import random
 import json
 import os
@@ -76,6 +77,9 @@ def create_new_lobby():
 def join_lobby(lobby_id):
     uid = request.args.get("uid")
     user_current_location = request.args.get("location")
+    uid = 'APFmUr3h0XexEANFNsKA6VsqJr72'
+    print(uid)
+    print(user_current_location)
     this_user_ref = users_ref.child(uid)
     this_user = this_user_ref.get()
     # this_user_active_lobbies = this_user["active_lobbies"] + ", " + str(lobby_id) if "active_lobbies" in \
@@ -86,9 +90,12 @@ def join_lobby(lobby_id):
         "location": user_current_location,
         "active_lobbies": this_user_active_lobbies
     })
+    print('here')
     this_lobby_ref = lobby_ref.child(lobby_id)
     this_lobby = this_lobby_ref.get()
+    print(this_lobby)
     this_lobby_current_members = this_lobby["current_members"] if "current_members" in this_lobby else None
+    print(this_lobby)
     if this_lobby_current_members is None:
         this_lobby_ref.set({
             "current_members": {
@@ -185,7 +192,7 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
 
     lat = 'lat=' + str(idealLocation[0])
     lon = '&lon=' + str(idealLocation[1])
-    range = '&range=' + str(dist) + 'mi'
+    r = '&range=' + str(dist) + 'mi'
 
     #change this
     currentDateTime = datetime.now() +  timedelta(hours=12)
@@ -198,10 +205,9 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
     timeRange = '&datetime_local.gte='  + str(currentDateTime) + '&datetime_local.lte='  + str(endDateTime)
     topPrice = '&average_price.lte=' + str(highPrice)
 
-    search = events_endpoint + lat + lon + range + sgAvailable + timeRange + topPrice + client_id + secret_code
+    search = events_endpoint + lat + lon + r + sgAvailable + timeRange + topPrice + client_id + secret_code
     sgList = requests.get(search)
     if sgList.status_code == 200:
-        sgList = requests.get(search)
         JSONsgList = sgList.json()
 
         option_append = []
@@ -238,10 +244,6 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
             make_a_choice()
     else:
         return request
-
-
-
-
 
 
 
@@ -332,9 +334,23 @@ def begin_compromise(lobby):
     location_return = getIdealLocation(coordList)
     ideal_location = location_return[0]
     radius = location_return[1]
+    #Remove this
     ideal_location = [37.780126, -122.410536]
     getSeatGeek(ideal_location,1000,100, 100,list_of_cats)
     get_yelp_choices(list(set(list_of_preferences)), ideal_location)
+
+
+def update_lobby_on_firebase(choices):
+    this_lobby_ref = lobby_ref.child(lobby_id)
+    
+    this_lobby_ref.set({
+            "choices": {
+                "0": choices[0],
+                "1": choices[1],
+                "2": choices[3]
+        }
+    })
+    return {"status":"success"}
 
 
 def make_a_choice():
@@ -352,7 +368,7 @@ def make_a_choice():
     choices.append(options[choice_1])
     choices.append(options[choice_2])
     choices.append(options[choice_3])
-    print(choices)
+    # update_lobby_on_firebase(choices)
     #write --> to firebase
     options = []
 
@@ -366,4 +382,12 @@ def make_choice(lobby_id):
     # make choice -> post to firebase
     #get lobby object with call back ->
     # get a set of preferences
-    pass
+    snapshot = lobby_ref.child(lobby_id).get()
+    if snapshot is None:
+        return json.dumps({"error": "User not found"})
+    else:
+        lobby = json.dumps(snapshot)
+        #begin_compromise(lobby)
+        return {"status":"success"}
+        
+
