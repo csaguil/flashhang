@@ -5,72 +5,102 @@ File that is the central location of code for our app.
 """
 
 from flask import Flask, request
-import sqlalchemy
 import random
 import json
-import requests
+import os
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
 
 # Create application, and point static path (where static resources like images, css, and js files are stored) to the
 # "static folder"
 app = Flask(__name__, static_url_path="/static")
-sql_engine = sqlalchemy.create_engine('mysql://flash:hang@localhost/db')
+# sql_engine = sqlalchemy.create_engine('mysql://flash:hang@localhost/db')
+cred = credentials.Certificate(os.environ["FIREBASE_PRIVATE_KEY"]) # os.environ["FIREBASE_PRIVATE_KEY"]
 
+# Initialize the app with a service account, granting admin privileges
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://flashhang-3b322.firebaseio.com/' #os.environ
+})
 
-@app.route('/get')
-def simple_get():
-    """
-    Get example
-    """
-    return "hi"  # Render the template located in "templates/index.html"
+# As an admin, the app has access to read and write all data, regardless of Security Rules
+ref = db.reference()
+users_ref = ref.child("users")
+lobby_ref = ref.child("lobbies")
 
+@app.route('/signup', methods=['POST'])
+def add_new_user():
+    new_user = json.loads(request.get_json())
+    uid = new_user["uid"]
+    del new_user["uid"]
+    users_ref.set({
+        uid: new_user
+    })
+    return json.dumps({"status":"success"})
 
-@app.route('/post', methods=['POST'])
-def simple_post():
-    """
-    Post example
-    """
-    data = request.form.get("data") # "request.form" is an example of a form that contains a "data" field
-    return data
-
-
-@app.route('/loggedin', methods=['POST'])
+@app.route('/loggedin')
 def retrieve_user_info():
-    uid = request.form.get("uid") # facebook user id
-    query_for_user = """
-        SELECT *
-        FROM users
-        WHERE user_id=:user_id
-    """
-    conn = sql_engine.connect()
-    result = conn.execute(query_for_user, user_id=uid)
-    if result is None:
+    uid = request.args.get("uid") # facebook user id
+    snapshot = users_ref.child(uid).get()
+    if snapshot is None:
         return json.dumps({"error": "User not found"})
     else:
-        return json.dumps(dict(result))
+        return json.dumps(snapshot)
 
 
-@app.route('/lobby/start', methods=['POST'])
+@app.route('/lobby/start')
 def create_new_lobby():
-    host_uid = request.form.get("uid")
-    lobby_name = request.form.get("lobby_name")
-    new_lobby_id = random.getrandbits(128)
-    insert_new_lobby_query = """
-    INSERT INTO LOBBIES (ID,NAME,STATE,HOST_ID)
-    VALUES (:id, :name, "Pre_Comp", :host_id);
-    """
-    conn = sql_engine.connect()
-    result = conn.execute(insert_new_lobby_query, id=new_lobby_id, name=lobby_name, host_id=host_uid)
+    host_uid = request.args.get("uid")
+    lobby_name = request.args.get("lobby_name")
+    new_lobby_id = random.getrandbits(64)
+    lobby_ref.set({
+        new_lobby_id: {
+            'name': lobby_name,
+            'state': "Pre_Comp",
+            'host_uid': host_uid
+        }
+    })
     return json.dumps({"lobby_id": new_lobby_id})
 
 
 @app.route('/lobby/join/<lobby_id>', methods=['POST'])
 def join_lobby(lobby_id):
-    uid = request.form.get("uid")
-    insert_user_into_lobby_query = """
-    """
+    uid = request.args.get("uid")
+    user_current_location = request.args.get("location")
+    this_user_ref = users_ref.child(uid)
+    this_user = this_user_ref.get()
+    this_user_active_lobbies = this_user["active_lobbies"] + ", " + str(lobby_id) if "active_lobbies" in \
+                                                                                     this_user else str(lobby_id)
+    this_user_ref.update({
+        "location": user_current_location,
+        "active_lobbies": this_user_active_lobbies
+    })
+    this_lobby_ref = lobby_ref.child(lobby_id)
+    this_lobby = this_lobby_ref.get()
+    this_lobby_current_members = this_lobby["current_members"] if "current_members" in this_lobby else None
+    if this_lobby_current_members is None:
+        this_lobby_ref.set({
+            "current_members": {
+                uid: {
+                    "preferences": this_user["preferences"],
+                    "location": user_current_location
+                }
+            }
+        })
+    else:
+        this_lobby_current_members[uid] = {
+            "preferences": this_user["preferences"],
+            "location": user_current_location
+        }
+        this_lobby_ref.update({
+            "current_members": this_lobby_current_members
+        })
+    return {"status":"success"}
 
-
-
-
-
-
+@app.route('/lobby/<lobby_id>')
+def lobby_view(lobby_id):
+    lobby = lobby_ref.child(lobby_id).get()
+    if lobby is None:
+        return json.dumps({"Error": "Lobby not found"})
+    return json.dumps(lobby)
