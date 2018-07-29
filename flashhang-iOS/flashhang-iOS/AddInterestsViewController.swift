@@ -71,19 +71,21 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
         
         return [
             "uid": (Auth.auth().currentUser?.uid)!,
-            "name": (Auth.auth().currentUser?.displayName)!.replacingOccurrences(of: " ", with: "%20"),
-            "preferences": "gokarts"
+            "name": (Auth.auth().currentUser?.displayName)!,
+            "preferences": preferences
         ]
     }
     
     @IBAction func next(_ sender: Any) {
-        let url = URL(string: "https://2096f9d6.ngrok.io")
+        let url = URL(string: "https://2096f9d6.ngrok.io/signup")
         var request = URLRequest(url: url!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         let jsonData = try? JSONSerialization.data(withJSONObject: constructJsonMap())
         print(jsonData == nil)
         request.httpBody = jsonData!
+        let jsonString = String(data: jsonData!, encoding: .utf8)
+        print(jsonString!)
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error

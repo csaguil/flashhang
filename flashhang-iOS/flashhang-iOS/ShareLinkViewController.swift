@@ -3,6 +3,7 @@ import UIKit
 class ShareLinkViewController: FlashHangViewController, UITextFieldDelegate {
     
     @IBOutlet var urlTextField: UITextField!
+    var lobbyUrl = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +17,7 @@ class ShareLinkViewController: FlashHangViewController, UITextFieldDelegate {
     }
     
     func setupUI() {
-        urlTextField.text = "bit.ly/32455"
+        urlTextField.text = lobbyUrl
     }
     @IBAction func goToLobby(_ sender: Any) {
         performSegue(withIdentifier: "shareLinkToLobbySegue", sender: nil)

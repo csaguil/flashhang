@@ -8,6 +8,7 @@ target 'flashhang-iOS' do
   pod 'Firebase/Auth'
   pod 'FacebookCore'
   pod 'FacebookLogin'
+  pod 'Alamofire', '~> 4.7'
 
   # Pods for flashhang-iOS
 

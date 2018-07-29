@@ -10,6 +10,11 @@ class LoginViewController: FlashHangViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let accessToken = AccessToken.current {
+            self.performSegue(withIdentifier: "loginToAddInterestsSegue", sender: nil)
+        } else {
+            print("asjeflaisdhflaisduhfiasduhfoaisudhf-----------")
+        }
         setupUI()
     }
     
