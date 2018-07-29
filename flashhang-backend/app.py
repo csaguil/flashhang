@@ -5,10 +5,13 @@ File that is the central location of code for our app.
 """
 
 from flask import Flask, request
-#import sqlalchemy
 import random
 import json
-import requests
+import os
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
 
 #UNIX TIMESTAMP
 from datetime import datetime, timedelta
@@ -21,61 +24,98 @@ from random import randint
 # Create application, and point static path (where static resources like images, css, and js files are stored) to the
 # "static folder"
 app = Flask(__name__, static_url_path="/static")
-#sql_engine = sqlalchemy.create_engine('mysql://flash:hang@localhost/db')
+cred = credentials.Certificate("flashhang-3b322-firebase-adminsdk-fj9cj-db9b5e44e1.json") # os.environ["FIREBASE_PRIVATE_KEY"]
 
+# Initialize the app with a service account, granting admin privileges
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://flashhang-3b322.firebaseio.com/' #os.environ
+})
 
-@app.route('/get')
-def simple_get():
-    """
-    Get example
-    """
-    return "hi"  # Render the template located in "templates/index.html"
+# As an admin, the app has access to read and write all data, regardless of Security Rules
+ref = db.reference()
+users_ref = ref.child("users")
+lobby_ref = ref.child("lobbies")
 
+@app.route('/signup', methods=['POST'])
+def add_new_user():
+    new_user = request.get_json()
+    uid = new_user["uid"]
+    del new_user["uid"]
+    users_ref.set({
+        uid: new_user
+    })
+    return json.dumps({"status":"success"})
 
-@app.route('/post', methods=['POST'])
-def simple_post():
-    """
-    Post example
-    """
-    data = request.form.get("data") # "request.form" is an example of a form that contains a "data" field
-    return data
-
-
-@app.route('/loggedin', methods=['POST'])
+@app.route('/loggedin')
 def retrieve_user_info():
-    uid = request.form.get("uid") # facebook user id
-    query_for_user = """
-        SELECT *
-        FROM users
-        WHERE user_id=:user_id
-    """
-    conn = sql_engine.connect()
-    result = conn.execute(query_for_user, user_id=uid)
-    if result is None:
+    uid = request.args.get("uid") # facebook user id
+    snapshot = users_ref.child(uid).get()
+    if snapshot is None:
         return json.dumps({"error": "User not found"})
     else:
-        return json.dumps(dict(result))
+        return json.dumps(snapshot)
 
 
 @app.route('/lobby/start', methods=['POST'])
 def create_new_lobby():
-    host_uid = request.form.get("uid")
-    lobby_name = request.form.get("lobby_name")
-    new_lobby_id = random.getrandbits(128)
-    insert_new_lobby_query = """
-    INSERT INTO LOBBIES (ID,NAME,STATE,HOST_ID)
-    VALUES (:id, :name, "Pre_Comp", :host_id);
-    """
-    conn = sql_engine.connect()
-    result = conn.execute(insert_new_lobby_query, id=new_lobby_id, name=lobby_name, host_id=host_uid)
+    lobby_details = request.get_json()
+    host_uid = lobby_details["uid"]
+    lobby_name = lobby_details["lobby_name"]
+    new_lobby_id = random.getrandbits(64)
+    lobby_ref.set({
+        new_lobby_id: {
+            'name': lobby_name,
+            'state': "Pre_Comp",
+            'host_uid': host_uid
+        }
+    })
     return json.dumps({"lobby_id": new_lobby_id})
 
 
 @app.route('/lobby/join/<lobby_id>', methods=['POST'])
 def join_lobby(lobby_id):
-    uid = request.form.get("uid")
-    insert_user_into_lobby_query = """
-    """
+    uid = request.args.get("uid")
+    user_current_location = request.args.get("location")
+    this_user_ref = users_ref.child(uid)
+    this_user = this_user_ref.get()
+    # this_user_active_lobbies = this_user["active_lobbies"] + ", " + str(lobby_id) if "active_lobbies" in \
+    #                                                                                  this_user else str(lobby_id)
+    this_user_active_lobbies = this_user["active_lobbies"] + str(lobby_id) if "active_lobbies" in \
+                                                                              this_user else [str(lobby_id)]
+    this_user_ref.update({
+        "location": user_current_location,
+        "active_lobbies": this_user_active_lobbies
+    })
+    this_lobby_ref = lobby_ref.child(lobby_id)
+    this_lobby = this_lobby_ref.get()
+    this_lobby_current_members = this_lobby["current_members"] if "current_members" in this_lobby else None
+    if this_lobby_current_members is None:
+        this_lobby_ref.set({
+            "current_members": {
+                uid: {
+                    "preferences": this_user["preferences"],
+                    "location": user_current_location
+                }
+            }
+        })
+    else:
+        this_lobby_current_members[uid] = {
+            "preferences": this_user["preferences"],
+            "location": user_current_location
+        }
+        this_lobby_ref.update({
+            "current_members": this_lobby_current_members
+        })
+    return {"status":"success"}
+
+
+@app.route('/lobby/<lobby_id>')
+def lobby_view(lobby_id):
+    lobby = lobby_ref.child(lobby_id).get()
+    if lobby is None:
+        return json.dumps({"Error": "Lobby not found"})
+    return json.dumps(lobby)
+
 
 
 ###### global Choices ###################################
@@ -122,7 +162,7 @@ def getIdealLocation(coordList):
        if(dist_from_avg<minDist):
            anchorCoord = peopleCoords
            minDist = dist_from_avg
-   
+
    idealLocation = anchorCoord
    avgDist = totalDistance/numPeople
 
@@ -140,7 +180,7 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
     client_id = '&client_id=MTI0NDczNjJ8MTUzMjgxMzA1OC43NA'
     secret_code = '&client_secret=495e3c53fc8f2e4bb9a930d8eeab34d7e6ab3d2d98c6c5dde3e2dc14205532e9'
     events_endpoint = 'https://api.seatgeek.com/2/events?'
-    
+
     dist = ceil(avgDist/2)
 
     lat = 'lat=' + str(idealLocation[0])
@@ -178,7 +218,7 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
                 # print(time.strftime('%d',time.mktime(event["datetime_local"]).timetuple ))
                 # print(time.strftime('%d of %B at %H%M', time.gmtime(event["datetime_local"])))
                 # print( datetime(event["datetime_local"]).strptime("%d" + " of " + "%B" +  " at " + "%H%M"))
-                # presentableTime = datetime(event["datetime_local"]) 
+                # presentableTime = datetime(event["datetime_local"])
                 option["time"] = event["datetime_local"]
                 pass
             if 'name' in event["venue"]:
@@ -206,7 +246,7 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
 
 
 #################YELP API#################
-def run_yelp_graph_query(query, headers, list_of_preferences): # A simple function to use requests.post to make the API call. Note the json= section.    
+def run_yelp_graph_query(query, headers, list_of_preferences): # A simple function to use requests.post to make the API call. Note the json= section.
     global preference_watch
     global options
     request = requests.post('https://api.yelp.com/v3/graphql', json={'query': query}, headers=headers)
@@ -216,7 +256,7 @@ def run_yelp_graph_query(query, headers, list_of_preferences): # A simple functi
         option_append = []
         for option in yelp_return['data']['search']['business']:
             option["hang_option"] = 'yelp'
-            option_append.append(option) 
+            option_append.append(option)
         options = options + option_append
 
         preference_watch.append('1')
@@ -248,7 +288,7 @@ def get_yelp_choices(list_of_preferences, ideal_location):
             longitude:""" + str(ideal_location[longitude])  + """,
             open_at:""" + str(unixtime)  +  """,
 
-            limit: 5)  
+            limit: 5)
             {
                 total
                 business {
@@ -278,7 +318,7 @@ def test():
     ideal_location.append(-122.410536)
     getSeatGeek(ideal_location,1000,100, 100,list_of_cats)
     get_yelp_choices('things',ideal_location)
-    
+
 
 def begin_compromise(lobby):
     list_of_preferences = []
@@ -316,7 +356,7 @@ def make_a_choice():
     #write --> to firebase
     options = []
 
-    
+
 
 @app.route('/lobby/start_search/<lobby_id>', methods=['POST'])
 def make_choice(lobby_id):
@@ -327,10 +367,3 @@ def make_choice(lobby_id):
     #get lobby object with call back ->
     # get a set of preferences
     pass
-
-
-
-
-
-
-
