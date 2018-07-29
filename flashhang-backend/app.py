@@ -151,8 +151,8 @@ def getSeatGeekr(idealLocation,highPrice,numberGoing, avgDist, radFactor,list_of
     lon = '&lon=' + str(idealLocation[1])
     radrange = '&range=' + str(dist) + 'mi'
 
-    currentDateTime = datetime.now() +  timedelta(hours=12)
-    endDateTime = currentDateTime + timedelta(hours=10)
+    currentDateTime = datetime.now()
+    endDateTime = currentDateTime + timedelta(hours=2)
     currentDateTime.isoformat()
     endDateTime.isoformat()
 
@@ -332,8 +332,8 @@ def getSeatGeek(idealLocation,highPrice,numberGoing, avgDist, list_of_preference
     r = '&range=' + str(dist) + 'mi'
 
     #change this
-    currentDateTime = datetime.now() +  timedelta(hours=12)
-    endDateTime = currentDateTime + timedelta(hours=10)
+    currentDateTime = datetime.now()
+    endDateTime = currentDateTime + timedelta(hours=3)
     currentDateTime.isoformat()
     endDateTime.isoformat()
 
@@ -384,11 +384,14 @@ def run_yelp_graph_query(query, headers, list_of_preferences,lobby_id): # A simp
     request = requests.post('https://api.yelp.com/v3/graphql', json={'query': query}, headers=headers)
     if request.status_code == 200:
         yelp_return = request.json()
-        if yelp_return == None:
+        if yelp_return == None or :
             return({"status": "error"})
         option_append = []
         for option in yelp_return['data']['search']['business']:
             option["hang_option"] = 'yelp'
+            option["url"] = "www.yelp.com/api/event?=125ipTy3vX"
+            if "location" in option and "address1" in option["location"]:
+                option["address"] = option["location"]["address1"]
             option_append.append(option)
         options = options + option_append
 
@@ -449,10 +452,10 @@ def test():
     ideal_location = []
     ideal_location.append(37.780126)
     ideal_location.append(-122.410536)
-    getSeatGeek(ideal_location,1000,100, 100,list_of_cats)
+    getSeatGeek(ideal_location,1000,1, 30,list_of_cats)
     # getSeatGeekr(ideal_location,1000,100, 100, 0.5,list_of_cats)
     get_yelp_choices('things',ideal_location)
-    getEventBrite(ideal_location, 100, 0.5, list_of_cats)
+    getEventBrite(ideal_location, 30, 0.5, list_of_cats)
 
 
 def begin_compromise(lobby,lobby_id):
@@ -471,9 +474,9 @@ def begin_compromise(lobby,lobby_id):
     #Remove this
     # ideal_location = [37.780126, -122.410536]
     print(ideal_location)
-    getSeatGeek(ideal_location,1000,100, 100,list_of_cats,lobby_id)
+    getSeatGeek(ideal_location,1000,1, 30,list_of_cats,lobby_id)
     get_yelp_choices(list(set(list_of_preferences)), ideal_location,lobby_id)
-    getEventBrite(ideal_location, 100, 0.5, list_of_cats,lobby_id)
+    getEventBrite(ideal_location, 40, 0.5, list_of_cats,lobby_id)
 
 
 def update_lobby_on_firebase(choices,lobby_id):
@@ -493,15 +496,15 @@ def update_lobby_on_firebase(choices,lobby_id):
 def make_a_choice(lobby_id):
     global options
     choices = []
-    choice_1 = randint(0, len(options))
-    choice_2 = randint(0, len(options))
+    choice_1 = randint(0, len(options)-1)
+    choice_2 = randint(0, len(options)-1)
     while(choice_1 == choice_2):
-        choice_2 = randint(0, len(options))
-    choice_3 = randint(0, len(options))
+        choice_2 = randint(0, len(options)-1)
+    choice_3 = randint(0, len(options)-1)
     while(choice_3 == choice_2):
-        choice_3 = randint(0, len(options))
+        choice_3 = randint(0, len(options)-1)
     while(choice_3 == choice_1):
-        choice_3 = randint(0, len(options))
+        choice_3 = randint(0, len(options)-1)
     choices.append(options[choice_1])
     choices.append(options[choice_2])
     choices.append(options[choice_3])
