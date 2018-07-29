@@ -516,6 +516,7 @@ def make_choice(lobby_id):
     # make choice -> post to firebase
     #get lobby object with call back ->
     # get a set of preferences
+    # lobby_id = response.get_json()["lobby_id"]
     snapshot = lobby_ref.child(lobby_id).get()
     if snapshot is None:
         return json.dumps({"error": "User not found"})
