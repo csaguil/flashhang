@@ -14,11 +14,17 @@ class JoinLobbyViewController: FlashHangViewController, UITextFieldDelegate, CLL
         super.viewDidLoad()
         idField.delegate = self
         setupLocationServices()
+        setupUI()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setupUI() {
+        idField.layer.borderWidth = 1.0
+        idField.layer.borderColor = colors["orange"]?.cgColor
     }
     
     func setupLocationServices() {

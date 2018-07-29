@@ -47,6 +47,7 @@ class VotingViewController: FlashHangViewController, UITableViewDelegate, UITabl
             imageView.image = UIImage(data: data!)
             imageView.contentMode = .scaleAspectFit
         }
+        cell.backgroundColor = colors["background"]
         return cell
     }
     

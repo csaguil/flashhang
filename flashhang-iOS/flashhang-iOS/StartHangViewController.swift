@@ -5,6 +5,7 @@ import CoreLocation
 
 class StartHangViewController: FlashHangViewController, CLLocationManagerDelegate {
 
+    @IBOutlet var joinExistingButton: UIButton!
     @IBOutlet var hangButton: UIButton!
     var lobbyId = ""
     let locationManager = CLLocationManager()
@@ -23,6 +24,7 @@ class StartHangViewController: FlashHangViewController, CLLocationManagerDelegat
     
     func setupUI() {
         hangButton.layer.cornerRadius = 0.5 * hangButton.bounds.size.width
+        joinExistingButton.tintColor = colors["orange"]
     }
     
     func setupLocationServices() {

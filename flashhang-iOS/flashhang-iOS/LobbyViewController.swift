@@ -20,6 +20,7 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
         inLobbyTableView.delegate = self
         inLobbyTableView.dataSource = self
         setupFirebase()
+        setupUI()
     }
     
     override func didReceiveMemoryWarning() {
@@ -29,6 +30,10 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
     
     func handleStateChangeToChoice() {
         performSegue(withIdentifier: "lobbyToVotingSegue", sender: nil)
+    }
+    
+    func setupUI() {
+        startButton.backgroundColor = colors["orange"]
     }
     
     func setupFirebase() {
@@ -83,6 +88,7 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
         let cell: UITableViewCell = (tableView.dequeueReusableCell(withIdentifier: "friendCell"))!
         let nameLabel = cell.viewWithTag(tagNameLabel) as! UILabel
         nameLabel.text = inLobby[indexPath.row]
+        cell.backgroundColor = UIColor.clear
         return cell
     }
     

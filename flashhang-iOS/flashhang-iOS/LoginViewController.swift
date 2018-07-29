@@ -14,10 +14,8 @@ class LoginViewController: FlashHangViewController, LoginButtonDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("----------------------------------------------------------")
         print(AccessToken.current != nil)
         if AccessToken.current != nil {
-            print("here")
             self.performSegue(withIdentifier: "loginToStartHangSegue", sender: nil)
         }
     }
@@ -31,6 +29,7 @@ class LoginViewController: FlashHangViewController, LoginButtonDelegate {
         let loginButton = LoginButton(readPermissions: [ .publicProfile ])
         loginButton.center = view.center
         loginButton.delegate = self
+        view.backgroundColor = UIColor.white
         
         view.addSubview(loginButton)
     }
