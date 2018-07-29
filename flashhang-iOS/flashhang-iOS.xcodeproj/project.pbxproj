@@ -14,6 +14,8 @@
 		40489119210D3B0300A36D7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40489118210D3B0300A36D7F /* GoogleService-Info.plist */; };
 		4048911B210D3CEC00A36D7F /* StartHangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4048911A210D3CEC00A36D7F /* StartHangViewController.swift */; };
 		4048911D210D3F6000A36D7F /* ShareLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4048911C210D3F6000A36D7F /* ShareLinkViewController.swift */; };
+		4048911F210D4DBE00A36D7F /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4048911E210D4DBE00A36D7F /* LobbyViewController.swift */; };
+		4075668F210D5B3600FDFC32 /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4075668E210D5B3600FDFC32 /* VotingViewController.swift */; };
 		40D42A93210D02BD00531C77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42A92210D02BD00531C77 /* AppDelegate.swift */; };
 		40D42A95210D02BD00531C77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42A94210D02BD00531C77 /* ViewController.swift */; };
 		40D42A98210D02BD00531C77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40D42A96210D02BD00531C77 /* Main.storyboard */; };
@@ -44,6 +46,8 @@
 		40489118210D3B0300A36D7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4048911A210D3CEC00A36D7F /* StartHangViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartHangViewController.swift; sourceTree = "<group>"; };
 		4048911C210D3F6000A36D7F /* ShareLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkViewController.swift; sourceTree = "<group>"; };
+		4048911E210D4DBE00A36D7F /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
+		4075668E210D5B3600FDFC32 /* VotingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingViewController.swift; sourceTree = "<group>"; };
 		40D42A8F210D02BD00531C77 /* flashhang-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "flashhang-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40D42A92210D02BD00531C77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40D42A94210D02BD00531C77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 			children = (
 				40D42A92210D02BD00531C77 /* AppDelegate.swift */,
 				40D42A96210D02BD00531C77 /* Main.storyboard */,
+				4075668E210D5B3600FDFC32 /* VotingViewController.swift */,
+				4048911E210D4DBE00A36D7F /* LobbyViewController.swift */,
 				4048911A210D3CEC00A36D7F /* StartHangViewController.swift */,
 				4048911C210D3F6000A36D7F /* ShareLinkViewController.swift */,
 				40D42A94210D02BD00531C77 /* ViewController.swift */,
@@ -325,8 +331,10 @@
 				40D42A95210D02BD00531C77 /* ViewController.swift in Sources */,
 				40D42A93210D02BD00531C77 /* AppDelegate.swift in Sources */,
 				40D42AB3210D13FE00531C77 /* FlashHangViewController.swift in Sources */,
+				4048911F210D4DBE00A36D7F /* LobbyViewController.swift in Sources */,
 				40489115210D1BE800A36D7F /* AddInterestsViewController.swift in Sources */,
 				40489113210D1A5A00A36D7F /* SignUpViewController.swift in Sources */,
+				4075668F210D5B3600FDFC32 /* VotingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
