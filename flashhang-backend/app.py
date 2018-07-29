@@ -42,7 +42,7 @@ def add_new_user():
     new_user = request.get_json()
     uid = new_user["uid"]
     del new_user["uid"]
-    users_ref.set({
+    users_ref.update({
         uid: new_user
     })
     return json.dumps({"status":"success"})
@@ -75,8 +75,9 @@ def create_new_lobby():
 
 @app.route('/lobby/join/<lobby_id>', methods=['POST'])
 def join_lobby(lobby_id):
-    uid = request.args.get("uid")
-    user_current_location = request.args.get("location")
+    json_response = request.get_json()
+    uid = json_response["uid"]
+    user_current_location = json_response["location"]
 
     this_user_ref = users_ref.child(uid)
     this_user = this_user_ref.get()
