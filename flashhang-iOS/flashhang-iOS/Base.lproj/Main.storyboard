@@ -20,47 +20,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BeZ-13-4qZ">
-                                <rect key="frame" x="30" y="283.5" width="315" height="120"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSE-cZ-2Nw">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
-                                        <color key="backgroundColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="W1n-Xc-j9l"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Log in with Facebook">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="loginWithFacebook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yRO-Jh-Y8d"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G18-7R-DYl">
-                                        <rect key="frame" x="0.0" y="70" width="315" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="rGi-pg-j7g"/>
-                                        </constraints>
-                                        <state key="normal" title="Log in with Phone Number">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="G18-7R-DYl" firstAttribute="leading" secondItem="BeZ-13-4qZ" secondAttribute="leading" id="072-ho-6wV"/>
-                                    <constraint firstAttribute="height" constant="120" id="5dY-bs-LWa"/>
-                                    <constraint firstItem="TSE-cZ-2Nw" firstAttribute="top" secondItem="BeZ-13-4qZ" secondAttribute="top" id="6gl-ST-3uC"/>
-                                    <constraint firstItem="G18-7R-DYl" firstAttribute="top" secondItem="TSE-cZ-2Nw" secondAttribute="bottom" constant="20" id="OxX-cP-xLn"/>
-                                    <constraint firstAttribute="trailing" secondItem="G18-7R-DYl" secondAttribute="trailing" id="hdM-sC-1ih"/>
-                                    <constraint firstAttribute="trailing" secondItem="TSE-cZ-2Nw" secondAttribute="trailing" id="iPR-DC-Bhj"/>
-                                    <constraint firstItem="TSE-cZ-2Nw" firstAttribute="leading" secondItem="BeZ-13-4qZ" secondAttribute="leading" id="mDh-N9-uH1"/>
-                                    <constraint firstAttribute="bottom" secondItem="G18-7R-DYl" secondAttribute="bottom" id="qms-2m-cvx"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NGk-aC-zSD">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NGk-aC-zSD">
                                 <rect key="frame" x="115" y="411" width="144" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Or create an account"/>
                                 <connections>
                                     <action selector="switchToSignup:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kfM-fV-rIX"/>
@@ -68,13 +30,6 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="BeZ-13-4qZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="32r-vp-t9v"/>
-                            <constraint firstItem="NGk-aC-zSD" firstAttribute="top" secondItem="G18-7R-DYl" secondAttribute="bottom" constant="7.5" id="awN-ev-s38"/>
-                            <constraint firstItem="BeZ-13-4qZ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="cK1-Gg-mdP"/>
-                            <constraint firstItem="NGk-aC-zSD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nZq-Vb-e6z"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BeZ-13-4qZ" secondAttribute="trailing" constant="30" id="oXI-ol-3Ft"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>

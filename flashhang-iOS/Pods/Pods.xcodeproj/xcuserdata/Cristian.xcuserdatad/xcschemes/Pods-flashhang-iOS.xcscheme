@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0F2B1A9546977C688974278D04D6BD10"
+               BlueprintIdentifier = "14CC7F5A8A15BBCB25C01A9A0F353292"
                BuildableName = "Pods_flashhang_iOS.framework"
                BlueprintName = "Pods-flashhang-iOS"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0F2B1A9546977C688974278D04D6BD10"
+            BlueprintIdentifier = "14CC7F5A8A15BBCB25C01A9A0F353292"
             BuildableName = "Pods_flashhang_iOS.framework"
             BlueprintName = "Pods-flashhang-iOS"
             ReferencedContainer = "container:Pods.xcodeproj">

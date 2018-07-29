@@ -1,9 +1,20 @@
 import UIKit
+import Firebase
 
 class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
-    var allInterests = ["soccer", "hiking", "food trucks", "art galleries", "restuarants", "lectures", "movies"]
-    var userInterests = [] as Array
+    var allInterests = ["escape games","amusement parks", "go karts", "museums", "cafes","bars", "karaoke", "zoos","maker spaces", "festivals","paintball", "mini golf", "bowling","spas"]
+    var list_of_cats = ["escapegames","amusementparks", "gokarts", "museums", "cafes","bars", "karaoke", "zoos","makerspaces", "festivals","paintball", "mini_golf", "bowling","spas"]
+    
+    var readableToYelpMap: [String: String] = [
+        "escape games": "escapegames",
+        "amusement parks": "amusementparks",
+        "go karts": "gokarts",
+        "maker spaces": "makerspaces",
+        "mini golf": "mini_golf"
+    ]
+    
+    var userInterests: [String] = []
     
     var tagInterestCellLabel = 1001
     
@@ -48,7 +59,48 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
         }
     }
     
+    func constructJsonMap() -> [String: Any] {
+        var preferences: [String] = []
+        for interest in userInterests {
+            if readableToYelpMap[interest] != nil {
+                preferences.append(readableToYelpMap[interest]!)
+            } else {
+                preferences.append(interest)
+            }
+        }
+        
+        return [
+            "uid": (Auth.auth().currentUser?.uid)!,
+            "name": (Auth.auth().currentUser?.displayName)!.replacingOccurrences(of: " ", with: "%20"),
+            "preferences": "gokarts"
+        ]
+    }
+    
     @IBAction func next(_ sender: Any) {
+        let url = URL(string: "https://2096f9d6.ngrok.io")
+        var request = URLRequest(url: url!)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        let jsonData = try? JSONSerialization.data(withJSONObject: constructJsonMap())
+        print(jsonData == nil)
+        request.httpBody = jsonData!
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
+            
+            let responseString = String(data: data, encoding: .utf8)
+            print("responseString = \(responseString)")
+        }
+        task.resume()
+        
         performSegue(withIdentifier: "addInterestsToStartHangSegue", sender: nil)
     }
 }

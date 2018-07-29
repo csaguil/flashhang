@@ -43,16 +43,23 @@
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
-	    <dict>
-	        <key>CFBundleTypeRole</key>
-	        <string>None</string>
-	        <key>CFBundleURLName</key>
-	        <string>auth0</string>
-	        <key>CFBundleURLSchemes</key>
-	        <array>
-	            <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	        </array>
-	    </dict>
+		<dict>
+		 <key>CFBundleURLSchemes</key>
+		 <array>
+		   <string>fb2127858030805762</string>
+		 </array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>2127858030805762</string>
+	<key>FacebookDisplayName</key>
+	<string>flashhang</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  	<string>fbapi</string>
+  	<string>fb-messenger-share-api</string>
+  	<string>fbauth2</string>
+  	<string>fbshareextension</string>
 	</array>
 </dict>
 </plist>
