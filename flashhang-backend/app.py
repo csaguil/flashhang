@@ -16,8 +16,7 @@ from firebase_admin import db
 # Create application, and point static path (where static resources like images, css, and js files are stored) to the
 # "static folder"
 app = Flask(__name__, static_url_path="/static")
-# sql_engine = sqlalchemy.create_engine('mysql://flash:hang@localhost/db')
-cred = credentials.Certificate(os.environ["FIREBASE_PRIVATE_KEY"]) # os.environ["FIREBASE_PRIVATE_KEY"]
+cred = credentials.Certificate("flashhang-3b322-firebase-adminsdk-fj9cj-db9b5e44e1.json") # os.environ["FIREBASE_PRIVATE_KEY"]
 
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
@@ -31,7 +30,7 @@ lobby_ref = ref.child("lobbies")
 
 @app.route('/signup', methods=['POST'])
 def add_new_user():
-    new_user = json.loads(request.get_json())
+    new_user = request.get_json()
     uid = new_user["uid"]
     del new_user["uid"]
     users_ref.set({
@@ -49,10 +48,11 @@ def retrieve_user_info():
         return json.dumps(snapshot)
 
 
-@app.route('/lobby/start')
+@app.route('/lobby/start', methods=['POST'])
 def create_new_lobby():
-    host_uid = request.args.get("uid")
-    lobby_name = request.args.get("lobby_name")
+    lobby_details = request.get_json()
+    host_uid = lobby_details["uid"]
+    lobby_name = lobby_details["lobby_name"]
     new_lobby_id = random.getrandbits(64)
     lobby_ref.set({
         new_lobby_id: {
@@ -70,8 +70,10 @@ def join_lobby(lobby_id):
     user_current_location = request.args.get("location")
     this_user_ref = users_ref.child(uid)
     this_user = this_user_ref.get()
-    this_user_active_lobbies = this_user["active_lobbies"] + ", " + str(lobby_id) if "active_lobbies" in \
-                                                                                     this_user else str(lobby_id)
+    # this_user_active_lobbies = this_user["active_lobbies"] + ", " + str(lobby_id) if "active_lobbies" in \
+    #                                                                                  this_user else str(lobby_id)
+    this_user_active_lobbies = this_user["active_lobbies"] + str(lobby_id) if "active_lobbies" in \
+                                                                              this_user else [str(lobby_id)]
     this_user_ref.update({
         "location": user_current_location,
         "active_lobbies": this_user_active_lobbies
@@ -97,6 +99,7 @@ def join_lobby(lobby_id):
             "current_members": this_lobby_current_members
         })
     return {"status":"success"}
+
 
 @app.route('/lobby/<lobby_id>')
 def lobby_view(lobby_id):
