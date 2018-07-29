@@ -518,6 +518,11 @@ def make_choice(lobby_id):
     #get lobby object with call back ->
     # get a set of preferences
     # lobby_id = response.get_json()["lobby_id"]
+    this_lobby_ref = lobby_ref.child(lobby_id)
+
+    this_lobby_ref.update({
+        "state": "started"
+    })
     snapshot = lobby_ref.child(lobby_id).get()
     if snapshot is None:
         return json.dumps({"error": "User not found"})
