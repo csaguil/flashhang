@@ -175,9 +175,9 @@ def getSeatGeekr(idealLocation,highPrice,numberGoing, avgDist, radFactor,list_of
         for event in JSONsgList["events"]:
             option = {}
             option['hang_option'] = 'seatgeek'
-            option["title"] = event["title"]
+            option["name"] = event["title"]
             option["url"] = event["url"]
-            option["image"] = event["performers"]["images"]["huge"]
+            option["photos"] = [event["performers"]["images"]["huge"]]
             print(event["datetime_tbd"])
             if event["datetime_tbd"] == False:
                 option["time"] = event["datetime_local"]
@@ -244,8 +244,8 @@ def getEventBrite(idealLocation, avgDist, radFactor, list_of_preferences,lobby_i
         event["name"] = JSONebList['events'][n]['name']['text']
         event["address"] = address
         event["url"] = JSONebList['events'][n]['url']
-        event["time"] = JSONebList['events'][n]['start']['local']
-        event["image"] = JSONebList['events'][n]['original']['url'] if 'original' in JSONebList['events'][n] and 'url' in JSONebList['events'][n]['original'] else 'https://www.tripsavvy.com/thmb/PdYn4eugR0zuP-oYGz00X9AYrvQ=/4037x2702/filters:fill(auto,1)/the-new-de-young-museum-in-golden-gate-park-148524473-591344515f9b5864703b6940.jpg'
+        event["date"] = JSONebList['events'][n]['start']['local']
+        event["photos"] = [JSONebList['events'][n]['original']['url'] if 'original' in JSONebList['events'][n] and 'url' in JSONebList['events'][n]['original'] else 'https://www.tripsavvy.com/thmb/PdYn4eugR0zuP-oYGz00X9AYrvQ=/4037x2702/filters:fill(auto,1)/the-new-de-young-museum-in-golden-gate-park-148524473-591344515f9b5864703b6940.jpg']
         events.append(event)
 
     options = options + events
