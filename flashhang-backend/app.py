@@ -446,7 +446,7 @@ def run_yelp_graph_query(query, headers, list_of_preferences,lobby_id): # A simp
     request = requests.post('https://api.yelp.com/v3/graphql', json={'query': query}, headers=headers)
     if request.status_code == 200:
         yelp_return = request.json()
-        if yelp_return == None or :
+        if yelp_return == None:
             return({"status": "error"})
         option_append = []
         for option in yelp_return['data']['search']['business']:
