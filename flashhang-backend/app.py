@@ -70,7 +70,8 @@ def create_new_lobby():
         new_lobby_id: {
             'name': lobby_name,
             'state': "Pre_Comp",
-            'host_uid': host_uid
+            'host_uid': host_uid,
+            'choice': 'none'
         }
     })
     return json.dumps({"lobby_id": str(new_lobby_id)})
@@ -532,3 +533,19 @@ def make_choice(lobby_id):
         # lobby = json.dumps(snapshot)
         begin_compromise(snapshot, lobby_id)
         return json.dumps({"status":"success"})
+
+@app.route('/lobby/choice/<lobby_id>/<choice_id>', methods=['POST'])
+def decide(lobby_id,choice_id):
+    #get user ids: -> call back
+    # for each user -> get yelp choices
+    #               ->  get seat_geek choices
+    # make choice -> post to firebase
+    #get lobby object with call back ->
+    # get a set of preferences
+    # lobby_id = response.get_json()["lobby_id"]
+    this_lobby_ref = lobby_ref.child(lobby_id)
+
+    this_lobby_ref.update({
+        "choice": choice_id
+    })
+    return json.dumps({"status":"success"})
