@@ -77,7 +77,7 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
     }
     
     @IBAction func next(_ sender: Any) {
-        let url = URL(string: "https://2096f9d6.ngrok.io/signup")
+        let url = URL(string: backendUrl + "signup")
         var request = URLRequest(url: url!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"

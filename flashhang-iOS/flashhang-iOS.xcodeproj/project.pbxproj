@@ -24,6 +24,7 @@
 		40D42AA8210D02BE00531C77 /* flashhang_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AA7210D02BE00531C77 /* flashhang_iOSTests.swift */; };
 		40D42AB3210D13FE00531C77 /* FlashHangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */; };
 		40D42AB5210D147100531C77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D42AB4210D147100531C77 /* LoginViewController.swift */; };
+		40D9DCAB210DB04900BD0A00 /* JoinLobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D9DCAA210DB04900BD0A00 /* JoinLobbyViewController.swift */; };
 		A7E0A6F939BF016F1CFBC13C /* Pods_flashhang_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8625C53640F48116789038FD /* Pods_flashhang_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		40D42AA9210D02BE00531C77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40D42AB2210D13FE00531C77 /* FlashHangViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashHangViewController.swift; sourceTree = "<group>"; };
 		40D42AB4210D147100531C77 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		40D9DCAA210DB04900BD0A00 /* JoinLobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinLobbyViewController.swift; sourceTree = "<group>"; };
 		5B128EF19E36ACED2C3E7B6C /* Pods-flashhang-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flashhang-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-flashhang-iOS/Pods-flashhang-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		8625C53640F48116789038FD /* Pods_flashhang_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_flashhang_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB819D61E1991AC36E83026E /* Pods-flashhang-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flashhang-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-flashhang-iOS/Pods-flashhang-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			children = (
 				40D42A92210D02BD00531C77 /* AppDelegate.swift */,
 				40D42A96210D02BD00531C77 /* Main.storyboard */,
+				40D9DCAA210DB04900BD0A00 /* JoinLobbyViewController.swift */,
 				4075668E210D5B3600FDFC32 /* VotingViewController.swift */,
 				4048911E210D4DBE00A36D7F /* LobbyViewController.swift */,
 				4048911A210D3CEC00A36D7F /* StartHangViewController.swift */,
@@ -343,6 +346,7 @@
 				40489115210D1BE800A36D7F /* AddInterestsViewController.swift in Sources */,
 				40489113210D1A5A00A36D7F /* SignUpViewController.swift in Sources */,
 				4075668F210D5B3600FDFC32 /* VotingViewController.swift in Sources */,
+				40D9DCAB210DB04900BD0A00 /* JoinLobbyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

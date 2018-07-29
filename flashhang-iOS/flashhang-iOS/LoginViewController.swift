@@ -10,9 +10,16 @@ class LoginViewController: FlashHangViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print("----------------------------------------------------------")
-//        print(AccessToken.current == nil)
         setupUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("----------------------------------------------------------")
+        print(AccessToken.current != nil)
+        if AccessToken.current != nil {
+            print("here")
+            self.performSegue(withIdentifier: "loginToStartHangSegue", sender: nil)
+        }
     }
     
     override func didReceiveMemoryWarning() {

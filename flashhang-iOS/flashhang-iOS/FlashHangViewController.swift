@@ -2,6 +2,8 @@ import UIKit
 
 class FlashHangViewController: UIViewController {
     
+    let backendUrl = "https://cf2c0aad.ngrok.io/"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

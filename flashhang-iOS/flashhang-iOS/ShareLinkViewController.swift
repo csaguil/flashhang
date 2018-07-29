@@ -3,7 +3,7 @@ import UIKit
 class ShareLinkViewController: FlashHangViewController, UITextFieldDelegate {
     
     @IBOutlet var urlTextField: UITextField!
-    var lobbyUrl = ""
+    var lobbyId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,10 +17,17 @@ class ShareLinkViewController: FlashHangViewController, UITextFieldDelegate {
     }
     
     func setupUI() {
-        urlTextField.text = lobbyUrl
+        urlTextField.text = lobbyId
     }
     @IBAction func goToLobby(_ sender: Any) {
         performSegue(withIdentifier: "shareLinkToLobbySegue", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "shareLinkToLobbySegue" {
+            let destination = segue.destination as! LobbyViewController
+            destination.lobbyId = self.lobbyId
+        }
     }
 }
 
