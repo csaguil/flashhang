@@ -26,30 +26,36 @@ from random import randint
 from uber_rides.session import Session
 from uber_rides.client import UberRidesClient
 
+from twilio.rest import Client
+
+
+# Your Account Sid and Auth Token from twilio.com/console
+account_sid = 'ACa12c1ea1f7c791a5e2f9fec8d866b40f'
+auth_token = '4b6576ca1870ad7ccfc22116a8067bd6'
+client = Client(account_sid, auth_token)
+
 
 # Create application, and point static path (where static resources like images, css, and js files are stored) to the
 # "static folder"
 app = Flask(__name__, static_url_path="/static")
-cred = credentials.Certificate("flashhang-3b322-firebase-adminsdk-fj9cj-db9b5e44e1.json") # os.environ["FIREBASE_PRIVATE_KEY"]
+cred = credentials.Certificate("flashhang-rn-firebase-adminsdk-povzw-21498f0751.json") # os.environ["FIREBASE_PRIVATE_KEY"]
 
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://flashhang-3b322.firebaseio.com/' #os.environ
+    'databaseURL': 'https://flashhang-rn.firebaseio.com/' #os.environ
 })
 
 # As an admin, the app has access to read and write all data, regardless of Security Rules
 ref = db.reference()
 users_ref = ref.child("users")
 lobby_ref = ref.child("lobbies")
+group_ref = ref.child("groups")
 
 @app.route('/signup', methods=['POST'])
 def add_new_user():
     new_user = request.get_json()
     uid = new_user["uid"]
     del new_user["uid"]
-    users_ref.update({
-        uid: new_user
-    })
     users_ref.child(uid).set(
         new_user
     )
@@ -57,39 +63,40 @@ def add_new_user():
 
 @app.route('/loggedin')
 def retrieve_user_info():
-    uid = request.args.get("uid") # facebook user id
-    snapshot = users_ref.child(uid).get()
-    if snapshot is None:
+    uid = request.get_json()["uid"] # facebook user id
+    user = users_ref.child(uid).get()
+    if user is None:
         return json.dumps({"error": "User not found"})
     else:
-        return json.dumps(snapshot)
+        return json.dumps(user)
 
 
 @app.route('/lobby/start', methods=['POST'])
 def create_new_lobby():
     lobby_details = request.get_json()
-    host_uid = lobby_details["uid"]
-    lobby_name = lobby_details["lobby_name"]
+    host_uid = lobby_details["host_uid"]
+    users_to_add = lobby_details["users"]
     new_lobby_id = random.getrandbits(16)
     lobby_ref.update({
         new_lobby_id: {
-            'name': lobby_name,
+            "inactive_users": users_to_add,
             'state': "Pre_Comp",
             'host_uid': host_uid,
             'choice': 'none'
         }
     })
+    join_lobby(str(new_lobby_id), host_uid)
     return json.dumps({"lobby_id": str(new_lobby_id)})
 
 
-@app.route('/lobby/join/<lobby_id>', methods=['POST'])
-def join_lobby(lobby_id):
+@app.route('/lobby/join/<lobby_id>/<uid>', methods=['POST'])
+def join_lobby(lobby_id, uid):
     json_response = request.get_json()
-    uid = json_response["uid"]
-    user_current_location = json_response["location"]
+    user_current_location = json_response["location"] if "location" in json_response else None
 
     this_user_ref = users_ref.child(uid)
     this_user = this_user_ref.get()
+    this_user_preferences = this_user["preferences"] if "preferences" in this_user else None
 
     this_user_active_lobbies = this_user["active_lobbies"] + [str(lobby_id)] if "active_lobbies" in \
                                                                               this_user else [str(lobby_id)]
@@ -100,26 +107,26 @@ def join_lobby(lobby_id):
 
     this_lobby_ref = lobby_ref.child(lobby_id)
     this_lobby = this_lobby_ref.get()
-    this_lobby_current_members = this_lobby["current_members"] if "current_members" in this_lobby else None
+    this_lobby_active_users = this_lobby["active_users"] if "active_users" in this_lobby else None
 
-    if this_lobby_current_members is None:
+    if this_lobby_active_users is None:
         this_lobby_ref.update({
-            "current_members": {
+            "active_users": {
                 uid: {
                     "name": this_user["name"],
-                    "preferences": this_user["preferences"],
+                    "preferences": this_user_preferences,
                     "location": user_current_location
                 }
             }
         })
     else:
-        this_lobby_current_members[uid] = {
+        this_lobby_active_users[uid] = {
             "name": this_user["name"],
-            "preferences": this_user["preferences"],
+            "preferences": this_user_preferences,
             "location": user_current_location
         }
         this_lobby_ref.update({
-            "current_members": this_lobby_current_members
+            "active_users": this_lobby_active_users
         })
     return json.dumps({"status":"success"})
 
@@ -130,6 +137,73 @@ def lobby_view(lobby_id):
     if lobby is None:
         return json.dumps({"Error": "Lobby not found"})
     return json.dumps(lobby)
+
+
+@app.route('/group/create', methods=['POST'])
+def create_group():
+    group_details = request.get_json()
+    group_name = group_details["group_name"]
+    group_members = group_details["group_members"]
+    group_stats = group_details["group_stats"]
+    new_group_id = random.getrandbits(16)
+    new_group = {
+        new_group_id: {
+            'name': group_name,
+            'members': group_members
+        }
+    }
+    for stat in group_stats:
+        new_group[new_group_id][stat] = group_stats[stat]
+    group_ref.update(new_group)
+    return json.dumps({"group_id": str(new_group_id)})
+
+@app.route('/group/<group_id>')
+def group_view(group_id):
+    group = group_ref.child(group_id).get()
+    if group is None:
+        return json.dumps({"Error": "Group not found"})
+    group_members = group["members"]
+    group["member_profiles"] = dict()
+    for member_id in group_members:
+        member_info = users_ref.child(member_id).get()
+        group["member_profiles"][member_id] = member_info
+    return json.dumps(group)
+
+
+@app.route('/group/<group_id>/add', methods=['POST'])
+def add_user_to_group(group_id):
+    new_user_id = request.get_json()["uid"]
+    group = group_ref.child(group_id).get()
+    group_members = group["members"]
+    if new_user_id in group_members:
+        return json.dumps({"Error": "User already in group"})
+    else:
+        group["members"] = group_members + new_user_id
+        group_ref.child(group_id).update(group)
+        return json.dumps({"status": "success"})
+
+
+@app.route('/group/<group_id>/delete', methods=['POST'])
+def delete_user_from_group(group_id):
+    user_id_to_remove = request.get_json()["uid"]
+    group = group_ref.child(group_id).get()
+    group["members"].remove(user_id_to_remove)
+    group_ref.child(group_id).update(group)
+    return json.dumps({"status": "success"})
+
+@app.route('/invite', methods=['POST'])
+def invite_to_lobby():
+    phone_numbers = request.get_json()["phone_numbers"]
+    lobby_link = request.get_json()["lobby_link"]
+    for number in phone_numbers:
+        message = client.messages \
+            .create(
+            body='You have been invited to Flash Hang! Here is the link to join: ' + lobby_link,
+            from_='+14158536119',
+            to=number
+        )
+        print(message.sid)
+    return json.dumps({"status": "success"})
 
 
 
@@ -523,10 +597,10 @@ def test():
 def begin_compromise(lobby,lobby_id):
     list_of_preferences = []
     list_of_user_coords = []
-    for uuid in lobby["current_members"]:
-        for preference in lobby["current_members"][uuid]["preferences"]:
+    for uuid in lobby["active_users"]:
+        for preference in lobby["active_users"][uuid]["preferences"]:
             list_of_preferences.append(preference)
-        list_of_user_coords.append(lobby["current_members"][uuid]["location"])
+        list_of_user_coords.append(lobby["active_users"][uuid]["location"])
 
     #get ideal location
     print(list_of_user_coords)
