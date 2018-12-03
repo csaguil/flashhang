@@ -6,6 +6,9 @@ import Firebase
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+/*
+ Login screen using Facebook Login API
+ */
 class LoginViewController: FlashHangViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
@@ -22,7 +25,6 @@ class LoginViewController: FlashHangViewController, LoginButtonDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func setupUI() {
@@ -33,6 +35,8 @@ class LoginViewController: FlashHangViewController, LoginButtonDelegate {
         
         view.addSubview(loginButton)
     }
+    
+    //Facebook Login methods -------------------------------------------------------------
     
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
         let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
@@ -49,6 +53,8 @@ class LoginViewController: FlashHangViewController, LoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: LoginButton) {
         return
     }
+    
+    //IB Actions/Segues -------------------------------------------------------------
     
     @IBAction func switchToSignup(_ sender: Any) {
         performSegue(withIdentifier: "loginToSignupSegue", sender: nil)

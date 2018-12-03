@@ -1,35 +1,36 @@
 import UIKit
 import Firebase
-
+/*
+ Allows users to add/edit their interests
+ */
 class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
-    var allInterests = ["escape games","amusement parks", "go karts", "museums", "cafes","bars", "karaoke", "zoos","maker spaces", "festivals","paintball", "mini golf", "bowling","spas"]
-    var list_of_cats = ["escapegames","amusementparks", "gokarts", "museums", "cafes","bars", "karaoke", "zoos","makerspaces", "festivals","paintball", "mini_golf", "bowling","spas"]
+    //hardcoded yelp categories in readable form
+    let allInterests = ["escape games","amusement parks", "go karts", "museums", "cafes","bars", "karaoke", "zoos","maker spaces", "festivals","paintball", "mini golf", "bowling","spas"]
     
-    var readableToYelpMap: [String: String] = [
+    //converts readable category to yelp category code, if not already in the right form
+    let readableToYelpMap: [String: String] = [
         "escape games": "escapegames",
         "amusement parks": "amusementparks",
         "go karts": "gokarts",
         "maker spaces": "makerspaces",
         "mini golf": "mini_golf"
     ]
+    let tagInterestCellLabel = 1001
     
     var userInterests: [String] = []
-    
-    var tagInterestCellLabel = 1001
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    //Table View methods -------------------------------------------------------------
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allInterests.count
     }
@@ -59,6 +60,7 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
         }
     }
     
+    //HTTP Request methods -------------------------------------------------------------
     func constructJsonMap() -> [String: Any] {
         var preferences: [String] = []
         for interest in userInterests {
@@ -76,7 +78,7 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
         ]
     }
     
-    @IBAction func next(_ sender: Any) {
+    func httpRequest() {
         let url = URL(string: backendUrl + "signup")
         var request = URLRequest(url: url!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -88,12 +90,13 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
         print(jsonString!)
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+            // check for fundamental networking error
+            guard let data = data, error == nil else {
                 print("error=\(error)")
                 return
             }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+            // check for http errors
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
                 print("statusCode should be 200, but is \(httpStatus.statusCode)")
                 print("response = \(response)")
             }
@@ -102,7 +105,11 @@ class AddInterestsViewController: FlashHangViewController, UITableViewDelegate, 
             print("responseString = \(responseString)")
         }
         task.resume()
-        
+    }
+    
+    //IB Actions/Segues -------------------------------------------------------------
+    @IBAction func next(_ sender: Any) {
+        httpRequest()
         performSegue(withIdentifier: "addInterestsToStartHangSegue", sender: nil)
     }
 }

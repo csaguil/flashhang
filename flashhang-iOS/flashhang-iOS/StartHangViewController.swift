@@ -2,13 +2,14 @@ import UIKit
 import Firebase
 import MapKit
 import CoreLocation
-
+/*
+ Main screen consisting of a single "Flash Hang" button
+ Sends a HTTP request to start or join a lobby
+ */
 class StartHangViewController: FlashHangViewController, CLLocationManagerDelegate {
 
     @IBOutlet var joinExistingButton: UIButton!
     @IBOutlet var hangButton: UIButton!
-    
-    
     
     var lobbyId = ""
     let locationManager = CLLocationManager()
@@ -22,13 +23,13 @@ class StartHangViewController: FlashHangViewController, CLLocationManagerDelegat
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func setupUI() {
-        //hangButton.layer.cornerRadius = 0.5 * hangButton.bounds.size.width
         joinExistingButton.tintColor = colors["orange"]
     }
+    
+    //Location Services methods -------------------------------------------------------------
     
     func setupLocationServices() {
         // For use in foreground
@@ -40,11 +41,13 @@ class StartHangViewController: FlashHangViewController, CLLocationManagerDelegat
             locationManager.startUpdatingLocation()
         }
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         self.location = locValue
     }
+    
+    //HTTP Request methods -------------------------------------------------------------
     
     func constructJsonMap(api: String) -> [String: Any] {
         if api == "lobby/start" {
@@ -60,17 +63,6 @@ class StartHangViewController: FlashHangViewController, CLLocationManagerDelegat
         } else {
             return [:]
         }
-    }
-    
-    @IBAction func joinExistingMeeting(_ sender: Any) {
-        self.performSegue(withIdentifier: "startHangToJoinLobbySegue", sender: nil)
-    }
-    
-    @IBAction func startHang(_ sender: Any) {
-        self.startLobbyRequest()
-        sleep(2)
-        self.joinLobbyRequest()
-        self.performSegue(withIdentifier: "startHangToShareLinkSegue", sender: nil)
     }
     
     func joinLobbyRequest() {
@@ -132,6 +124,19 @@ class StartHangViewController: FlashHangViewController, CLLocationManagerDelegat
             }
         }
         task.resume()
+    }
+    
+    //IB Actions/Segues -------------------------------------------------------------
+    
+    @IBAction func joinExistingMeeting(_ sender: Any) {
+        self.performSegue(withIdentifier: "startHangToJoinLobbySegue", sender: nil)
+    }
+    
+    @IBAction func startHang(_ sender: Any) {
+        self.startLobbyRequest()
+        sleep(2)
+        self.joinLobbyRequest()
+        self.performSegue(withIdentifier: "startHangToShareLinkSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

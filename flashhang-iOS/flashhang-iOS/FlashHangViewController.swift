@@ -1,5 +1,8 @@
 import UIKit
 
+/*
+ Parent class for all view controllers to inherit from
+ */
 class FlashHangViewController: UIViewController {
     
     let backendUrl = "https://cf2c0aad.ngrok.io/"
@@ -20,7 +23,4 @@ class FlashHangViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
-

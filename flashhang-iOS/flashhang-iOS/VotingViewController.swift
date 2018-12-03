@@ -1,7 +1,10 @@
 import UIKit
 import Firebase
 import AgoraRtcEngineKit
-
+/*
+ Voting screen - displays the computed choices
+ Allows users to participate in a audio chat to decide which recommendation they want to do
+ */
 class VotingViewController: FlashHangViewController, UITableViewDelegate, UITableViewDataSource, AgoraRtcEngineDelegate {
     
     @IBOutlet var tableView: UITableView!
@@ -33,8 +36,16 @@ class VotingViewController: FlashHangViewController, UITableViewDelegate, UITabl
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    func setupFirebase() {
+        ref = Database.database().reference().child("lobbies/" + lobbyId! + "/choices")
+        let refHandle = ref.observe(.childAdded, with: { (snapshot) in
+            let postDict = snapshot.value as? NSDictionary ?? [:]
+        })
+    }
+    
+    //Agora methods -------------------------------------------------------------
     
     func initializeAgoraEngine() {
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "ac883fbf8483440e852e71ea25cafd3f", delegate: self)
@@ -54,15 +65,7 @@ class VotingViewController: FlashHangViewController, UITableViewDelegate, UITabl
         agoraKit.leaveChannel(nil)
     }
     
-    func setupFirebase() {
-        ref = Database.database().reference().child("lobbies/" + lobbyId! + "/choices")
-        let refHandle = ref.observe(.childAdded, with: { (snapshot) in
-            let postDict = snapshot.value as? NSDictionary ?? [:]
-//            self.inLobby.append(postDict["name"] as! String)
-//            self.inLobbyTableView.reloadData()
-        })
-        
-    }
+    //Table View methods -------------------------------------------------------------
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "activityCell")!
@@ -95,10 +98,7 @@ class VotingViewController: FlashHangViewController, UITableViewDelegate, UITabl
         self.performSegue(withIdentifier: "votingToActivityDetailSegue", sender: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! ActivityDetailViewController
-        destination.choice = self.choices?[self.selectedChoiceIdx!]
-    }
+    //IB Actions/Segues -------------------------------------------------------------
     
     @IBAction func toggleMute(_ sender: Any) {
         if muteOn { //text should read unmute
@@ -120,6 +120,11 @@ class VotingViewController: FlashHangViewController, UITableViewDelegate, UITabl
             agoraKit.setEnableSpeakerphone(false)
         }
         speakerOn = !speakerOn
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination as! ActivityDetailViewController
+        destination.choice = self.choices?[self.selectedChoiceIdx!]
     }
 }
 

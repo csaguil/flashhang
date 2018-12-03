@@ -1,16 +1,18 @@
 import UIKit
 import Firebase
 
+/*
+ Waiting screen to display which users are in the lobby
+ Listens for firebase notifications of new users joining
+ */
 class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var inLobbyTableView: UITableView!
     @IBOutlet var startButton: UIButton!
     var refName: DatabaseReference!
     var refState: DatabaseReference!
-//    var choices: [[String: AnyObject]]?
     
     var lobbyId: String?
-    
     var inLobby: [String] = []
     
     let tagNameLabel = 1001
@@ -25,16 +27,13 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-//    func handleStateChangeToChoice() {
-//        performSegue(withIdentifier: "lobbyToVotingSegue", sender: nil)
-//    }
     
     func setupUI() {
         startButton.backgroundColor = colors["orange"]
     }
+    
+    //HTTP Request/Firebase methods -------------------------------------------------------------
     
     func setupFirebase() {
         refName = Database.database().reference().child("lobbies/" + lobbyId! + "/current_members")
@@ -47,11 +46,8 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
         refState = Database.database().reference().child("lobbies/" + lobbyId!)
         let refStateHandle = refState.observe(.value, with: { (snapshot) in
             let postDict = snapshot.value as? [String: AnyObject] ?? [:]
-            print("-----------------------STATE--------------------------------")
             print(postDict["state"] as! String)
             if postDict["state"] as! String == "started" {
-//                self.choices = postDict["choices"] as! [[String: AnyObject]]
-//                self.handleStateChangeToChoice()
                 self.performSegue(withIdentifier: "lobbyToVideoChatSegue", sender: nil)
             }
         })
@@ -62,24 +58,25 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
-        print(request)
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+            // check for fundamental networking error
+            guard let data = data, error == nil else {
                 print("error=\(error)")
                 return
             }
             
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+            // check for http errors
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
                 print("statusCode should be 200, but is \(httpStatus.statusCode)")
                 print("response = \(response)")
             }
             
             let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(responseString)")
         }
         task.resume()
     }
+    
+    //Table View Methods -------------------------------------------------------------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return inLobby.count
@@ -93,11 +90,13 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
         return cell
     }
     
+    //IB Actions/Segues -------------------------------------------------------------
+    
     @IBAction func startHang(_ sender: Any) {
         startSearch()
         self.performSegue(withIdentifier: "lobbyToVideoChatSegue", sender: nil)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "lobbyToVotingSegue" {
             let destination = segue.destination as! VotingViewController
@@ -108,6 +107,5 @@ class LobbyViewController: FlashHangViewController, UITableViewDelegate, UITable
             destination.lobbyId = self.lobbyId
         }
     }
-    
 }
 

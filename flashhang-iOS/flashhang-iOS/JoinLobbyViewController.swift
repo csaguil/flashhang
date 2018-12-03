@@ -2,13 +2,15 @@ import UIKit
 import Firebase
 import MapKit
 import CoreLocation
-
+/*
+ Screen where users can input the desired lobby code
+ and send a request to join that lobby
+ */
 class JoinLobbyViewController: FlashHangViewController, UITextFieldDelegate, CLLocationManagerDelegate {
     
     @IBOutlet var idField: UITextField!
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +21,14 @@ class JoinLobbyViewController: FlashHangViewController, UITextFieldDelegate, CLL
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func setupUI() {
         idField.layer.borderWidth = 1.0
         idField.layer.borderColor = colors["orange"]?.cgColor
     }
+    
+    //Location Service methods -------------------------------------------------------------
     
     func setupLocationServices() {
         // For use in foreground
@@ -42,6 +45,8 @@ class JoinLobbyViewController: FlashHangViewController, UITextFieldDelegate, CLL
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         self.location = locValue
     }
+    
+    //HTTP Request methods -------------------------------------------------------------
     
     func constructJsonMap() -> [String: Any] {
         return [
@@ -77,12 +82,7 @@ class JoinLobbyViewController: FlashHangViewController, UITextFieldDelegate, CLL
         task.resume()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "joinLobbyToLobbySegue" {
-            let destination = segue.destination as! LobbyViewController
-            destination.lobbyId = idField.text
-        }
-    }
+    //IB Actions/Segues -------------------------------------------------------------
     
     @IBAction func join(_ sender: Any) {
         let id = idField.text!
@@ -92,5 +92,11 @@ class JoinLobbyViewController: FlashHangViewController, UITextFieldDelegate, CLL
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "joinLobbyToLobbySegue" {
+            let destination = segue.destination as! LobbyViewController
+            destination.lobbyId = idField.text
+        }
+    }
 }
 

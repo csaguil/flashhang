@@ -1,5 +1,12 @@
 import UIKit
 
+/*
+ Screen which provides url to share with other users
+ allowing them to join a given lobby
+ 
+ lobby id is generated in StartHangViewController, then passed in
+ to this controller during the segue
+ */
 class ShareLinkViewController: FlashHangViewController, UITextFieldDelegate {
     
     @IBOutlet var urlTextField: UITextField!
@@ -14,7 +21,6 @@ class ShareLinkViewController: FlashHangViewController, UITextFieldDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func setupUI() {
@@ -23,6 +29,8 @@ class ShareLinkViewController: FlashHangViewController, UITextFieldDelegate {
         urlTextField.layer.borderWidth = 1.0
         urlTextField.layer.borderColor = colors["orange"]?.cgColor
     }
+    
+    //IB Actions/Segues -------------------------------------------------------------
     @IBAction func goToLobby(_ sender: Any) {
         performSegue(withIdentifier: "shareLinkToLobbySegue", sender: nil)
     }

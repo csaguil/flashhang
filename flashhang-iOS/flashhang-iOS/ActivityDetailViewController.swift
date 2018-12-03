@@ -1,5 +1,8 @@
 import UIKit
-
+/*
+ Displays the suggested restaurant, bar, activity, etc.
+ and provides extra details such as the address, and website
+ */
 class ActivityDetailViewController: FlashHangViewController {
     
     var choice: [String: AnyObject]?
@@ -12,7 +15,10 @@ class ActivityDetailViewController: FlashHangViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     func setupUI() {
@@ -39,14 +45,6 @@ class ActivityDetailViewController: FlashHangViewController {
             imageView.image = UIImage(data: data!)
             imageView.contentMode = .scaleAspectFit
         }
-        
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 }
 

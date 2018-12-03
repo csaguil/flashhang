@@ -2,6 +2,9 @@ import UIKit
 import AgoraRtcEngineKit
 import Firebase
 
+/*
+ Waiting screen with video chat, while backend computes the recommendations
+ */
 class VideoChatViewController: FlashHangViewController {
     
     @IBOutlet weak var localVideo: UIView!              // Tutorial Step 3
@@ -19,9 +22,22 @@ class VideoChatViewController: FlashHangViewController {
         setupVideo()                // Tutorial Step 2
         setupLocalVideo()           // Tutorial Step 3
         joinChannel()               // Tutorial Step 4
-        // Do any additional setup after loading the view, typically from a nib.
         setupFirebase()
     }
+    
+    func setupFirebase() {
+        refState = Database.database().reference().child("lobbies/" + lobbyId!)
+        let refStateHandle = refState.observe(.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String: AnyObject] ?? [:]
+            print(postDict["state"] as! String)
+            if postDict["state"] as! String == "choice" {
+                self.choices = postDict["choices"] as! [[String: AnyObject]]
+                self.performSegue(withIdentifier: "videoChatToVotingSegue", sender: nil)
+            }
+        })
+    }
+    
+    //Agora methods -------------------------------------------------------------
     
     // Tutorial Step 1
     func initializeAgoraEngine() {
@@ -54,18 +70,7 @@ class VideoChatViewController: FlashHangViewController {
         }
     }
     
-    func setupFirebase() {
-        refState = Database.database().reference().child("lobbies/" + lobbyId!)
-        let refStateHandle = refState.observe(.value, with: { (snapshot) in
-            let postDict = snapshot.value as? [String: AnyObject] ?? [:]
-            print("-----------------------STATE--------------------------------")
-            print(postDict["state"] as! String)
-            if postDict["state"] as! String == "choice" {
-                self.choices = postDict["choices"] as! [[String: AnyObject]]
-                self.performSegue(withIdentifier: "videoChatToVotingSegue", sender: nil)
-            }
-        })
-    }
+    //IBActions/Segues -------------------------------------------------------------
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "videoChatToVotingSegue" {
@@ -80,7 +85,6 @@ class VideoChatViewController: FlashHangViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
@@ -93,16 +97,5 @@ extension VideoChatViewController: AgoraRtcEngineDelegate {
         videoCanvas.renderMode = .adaptive
         agoraKit.setupRemoteVideo(videoCanvas)
     }
-    
-//    // Tutorial Step 7
-//    internal func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid:UInt, reason:AgoraUserOfflineReason) {
-//        self.remoteVideo.isHidden = true
-//    }
-//
-//    // Tutorial Step 10
-//    func rtcEngine(_ engine: AgoraRtcEngineKit, didVideoMuted muted:Bool, byUid:UInt) {
-//        remoteVideo.isHidden = muted
-//        remoteVideoMutedIndicator.isHidden = !muted
-//    }
 }
 
